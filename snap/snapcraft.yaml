@@ -1,0 +1,32 @@
+name: linode-dyndns
+base: core18
+version: '0.1'
+summary: Update Linode DNS Manager record with current IP address
+description: |
+  A simple snap that sends a request to the Linode DNS manager every half
+  hour and updates a DNS entry with the current (ISP-level) IP.
+
+grade: stable
+confinement: strict
+
+architectures:
+  - build-on: amd64
+  - build-on: armhf
+  - build-on: arm64
+
+apps:
+  linode-dyndns:
+    command: bin/update-dns
+    daemon: oneshot
+    timer: 00:00-24:00/48
+    plugs: [network]
+
+parts:
+  update-dns:
+    plugin: dump
+    source: bin
+    organize:
+      update-dns.sh: bin/update-dns
+    stage-packages:
+      - curl
+      - dnsutils

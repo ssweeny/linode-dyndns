@@ -1,0 +1,13 @@
+#!/bin/sh -e
+
+if ! auth_token=$(snapctl get authtoken); then
+    echo "Please configure your auth token with 'snap set ${SNAP_NAME} authtoken=<token>'"
+fi
+
+if ! domain_id=$(snapctl get domainid); then
+    echo "Please configure your domain ID with 'snap set ${SNAP_NAME} domainid=<id>'"
+fi
+
+if ! resource_id=$(snapctl get resourceid); then
+    echo "Please configure your resource ID with 'snap set ${SNAP_NAME} resourceid=<id>'"
+fi
